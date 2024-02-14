@@ -31,20 +31,26 @@ async function main() {
   const chaiContract = await chai.deploy();
   await chaiContract.deployed();
 
-  console.log("Address of contract:", chaiContract);
+  console.log("Address of contract:", chaiContract.address);
 
   const addresses = [owner.address, from1.address];
   console.log("Balances before transfer:");
   await consoleBalances(addresses);
 
   const amount = hre.ethers.utils.parseEther("1.0");
-  await chaiContract.connect(from1).buyChai("from1", "very nice chai", amount);
-  await chaiContract
+  const tx1 = await chaiContract
+    .connect(from1)
+    .buyChai("from1", "very nice chai", ethers.utils.parseEther("1.0"));
+  await tx1.wait();
+  console.log("3333");
+  const tx2 = await chaiContract
     .connect(from2)
-    .buyChai("from2", "very nice course", amount);
-  await chaiContract
+    .buyChai("from2", "very nice course", ethers.utils.parseEther("1.0"));
+  await tx2.wait();
+  const tx3 = await chaiContract
     .connect(from3)
-    .buyChai("from3", "very nice information", amount);
+    .buyChai("from3", "very nice information", ethers.utils.parseEther("1.0"));
+  await tx3.wait();
 
   console.log("Balances after transfer:");
   await consoleBalances(addresses);
