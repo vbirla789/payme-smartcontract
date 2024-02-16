@@ -19,7 +19,7 @@ const Memos = ({ state }) => {
           <p className="font-semibold dark:text-white">Name: {memo.name}</p>
           <p className="dark:text-gray-400">Message: {memo.message}</p>
           <p className="dark:text-gray-400">
-            Timestamp: {String(memo.timestamp)}
+            Timestamp: {new Date(memo.timestamp * 1000).toLocaleString()}
           </p>
           <p className="dark:text-gray-400">From: {memo.from}</p>
         </div>

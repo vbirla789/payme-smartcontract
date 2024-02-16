@@ -47,6 +47,7 @@ const Buy = ({ state }) => {
         <button
           type="submit"
           className="btn btn-primary dark:bg-blue-500 dark:hover:bg-blue-700 rounded-md p-2 max-w-xs mt-4"
+          disabled={!state.contract}
         >
           Send Ether
         </button>

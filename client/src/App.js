@@ -11,6 +11,8 @@ function App() {
     contract: null,
   });
 
+  const [account, setAccount] = useState("None");
+
   useEffect(() => {
     const connectWallet = async () => {
       const contractAddress = "0xb898C32ab7ce1e9850032555D23C241704f811F9";
@@ -22,19 +24,31 @@ function App() {
           const account = await ethereum.request({
             method: "eth_requestAccounts",
           });
+
+          window.ethereum.on("chainChanged", () => {
+            window.location.reload();
+          });
+
+          window.ethereum.on("accountChanged", () => {
+            window.location.reload();
+          });
+
+          const provider = new ethers.providers.Web3Provider(ethereum);
+          const signer = provider.getSigner();
+          const contract = new ethers.Contract(
+            contractAddress,
+            contractAbi,
+            signer
+          );
+          setState({
+            provider,
+            signer,
+            contract,
+          });
+          setAccount(account);
+        } else {
+          alert("Please install MetaMask!");
         }
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(
-          contractAddress,
-          contractAbi,
-          signer
-        );
-        setState({
-          provider,
-          signer,
-          contract,
-        });
       } catch (error) {
         console.error(error);
       }
@@ -47,6 +61,9 @@ function App() {
       <header className="App-header bg-gray-800 p-4">
         <h1 className="text-4xl font-bold dark:text-white text-center">
           PAY ME..
+        </h1>
+        <h1 className="text-lg font-semibold dark:text-white text-center mt-2">
+          AC- {account}
         </h1>
       </header>
       <div className="container mx-auto p-4">
