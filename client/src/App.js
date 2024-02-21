@@ -59,9 +59,9 @@ function App() {
   return (
     <div className="App dark:bg-gray-900 dark:text-gray-200 min-h-screen">
       <header className="App-header bg-gray-800 p-4">
-        <h1 className="text-4xl font-bold dark:text-white text-center">
+        {/* <h1 className="text-4xl font-bold dark:text-white text-center">
           PAY ME..
-        </h1>
+        </h1> */}
         <h1 className="text-lg font-semibold dark:text-white text-center mt-2">
           AC- {account}
         </h1>
